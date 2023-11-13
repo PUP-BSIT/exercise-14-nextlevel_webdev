@@ -19,7 +19,7 @@ function updateCommentButton() {
 function addComment() {
     const full_name = get('full_name').value;
     const comment = get('comment').value;
-    const commentContainer = get('comments_container');
+    const commentContainer = get('comments-container');
     const newComment = createComment(full_name, comment);
     commentContainer.prepend(newComment);
     get('full_name').value = '';
@@ -27,7 +27,7 @@ function addComment() {
 }
 
 function sortComments(order) {
-    const commentContainer = get('comments_container');
+    const commentContainer = get('comments-container');
     const comments = Array.from(commentContainer.children);
 
     comments.sort(function(a, b) {
