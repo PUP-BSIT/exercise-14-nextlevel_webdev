@@ -3,7 +3,7 @@ const val = (id) => get(id).value.trim();
 const createComment = (full_name, comment) => {
     const newComment = document.createElement('div');
     newComment.classList.add('comment');
-    newComment.innerHTML = <p><strong>${full_name}: </strong>${comment}</p>;
+    newComment.innerHTML = `<p><strong>${full_name}: </strong>${comment}</p>`;
     newComment.dataset.date = new Date().toISOString();
     return newComment;
 };
