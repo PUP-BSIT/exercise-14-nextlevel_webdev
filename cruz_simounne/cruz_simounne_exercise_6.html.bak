@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cruz Simounne Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div>
+        <h1>Cruz Simounne</h1>
+    </div>
+    
+    <div>
+        <h2>My Interests and Hobbies</h2>
+        <ul>
+            <li>
+                Reading books.
+                <p>I always enjoy reading my favorite books.</p>
+            </li>
+            <li>
+                Listening to music.
+                <p>My favorite song artists are Lola Amour, iKON, and Bruno Mars.</p>
+            </li>
+            <li>
+                Watching anime on television.
+                <p>My favorite anime is One Piece.</p>
+            </li>
+            <li>
+                Cooking our favorite foods.
+                <p>I love to cook for my family.</p>
+            </li>
+            <li>
+                Playing with my pets.
+                <p>I have wonderful pets named Austin and Asia.</p>
+            </li>
+        </ul>
+    </div>
+        
+    <div>
+        <h2>My Works</h2>
+        <ol>
+            <li><a href="./simsample.html" target="_blank">Psychologist</a></li>
+            <li><a href="./simsample.html" target="_blank">Nurse</a></li>
+            <li><a href="./simsample.html" target="_blank">Graphic Designer</a></li>
+            <li><a href="./simsample.html" target="_blank">Radiologic Technologist</a></li>
+            <li><a href="./simsample.html" target="_blank">Veterinarian</a></li>
+        </ol>
+    </div>
+    
+    <div>
+        <h2>Testimonials</h2>
+    </div>
+        
+    <div>
+        <h2>Gallery</h2>
+        <img src="pic5.jpg" alt="Picture 1">
+        <img src="pic5.jpg" alt="Picture 2">
+        <img src="pic5.jpg" alt="Picture 3">
+        <img src="pic5.jpg" alt="Picture 4">
+        <img src="pic5.jpg" alt="Picture 5">
+    </div>
+</body>
+</html>
