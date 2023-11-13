@@ -1,36 +1,61 @@
-document.addEventListener("DOMContentLoaded", function () {
-// Enable the "Comment" button when both fields are filled out
-const nameInput = document.getElementById("name");
-const commentInput = document.getElementById("comment");
-const commentButton = document.getElementById("comment_button");
-const commentDisplay = document.getElementById("comment_Display");
+const get = (id) => document.getElementById(id);
+const val = (id) => get(id).value.trim();
+const createComment = (full_name, comment) => {
+    const newComment = document.createElement('div');
+    newComment.classList.add('comment');
+    newComment.innerHTML = `<p><strong>${full_name}: </strong>${comment}</p>`;
+    newComment.dataset.date = new Date().toISOString();
+    return newComment;
+};
 
-nameInput.addEventListener("input", toggleCommentButton);
-commentInput.addEventListener("input", function () {
-    toggleCommentButton();
-        commentDisplay.textContent = commentInput.value;
-});
-
-function toggleCommentButton() {
-    commentButton.disabled = !(nameInput.value && commentInput.value);
+function updateCommentButton() {
+    const full_name = get('full_name').value;
+    const comment = get('comment').value;
+    const comment_button = get('comment_button');
+    
+    comment_button.disabled = full_name.trim() === ''|| comment.trim() === '';
 }
 
-document.getElementById('comment_form').addEventListener('submit', 
-function(event) {
-event.preventDefault(); 
+function addComment() {
+    const full_name = get('full_name').value;
+    const comment = get('comment').value;
+    const commentContainer = get('comments_container');
+    const newComment = createComment(full_name, comment);
+    commentContainer.prepend(newComment);
+    get('full_name').value = '';
+    get('comment').value = '';
+}
 
-const name = nameInput.value;
-const comment = commentInput.value;
+function sortComments(order) {
+    const commentContainer = get('comments_container');
+    const comments = Array.from(commentContainer.children);
 
-const newComment = document.createElement('div');
-newComment.classList.add('comment');
-newComment.innerHTML = `<strong>${name}:</strong> ${comment}`;
+    comments.sort(function(a, b) {
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
 
-commentDisplay.insertBefore(newComment, commentDisplay.firstChild);
+        return order === 'asc' ? dateA - dateB : dateB - dateA;
+    });
 
-nameInput.value = '';
-commentInput.value = '';
+    commentContainer.innerHTML = '';
+    comments.forEach(function(comment) {
+        commentContainer.appendChild(comment);
+    });
+}
 
-commentButton.disabled = true;
+get('comment_form').addEventListener('input', updateCommentButton);
+
+get('comment_form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    addComment();
+    updateCommentButton();
+    sortComments('asc');
 });
+
+get('sort_asc_button').addEventListener('click', function() {
+    sortComments('asc');
+});
+
+get('sort_desc_button').addEventListener('click', function() {
+    sortComments('desc');
 });
