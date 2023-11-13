@@ -9,7 +9,7 @@ const createComment = (full_name, comment) => {
 };
 
 function updateCommentButton() {
-    const full_name = get('full_name').value;
+    const full_name = get('name').value;
     const comment = get('comment').value;
     const comment_button = get('comment_button');
     
@@ -17,17 +17,17 @@ function updateCommentButton() {
 }
 
 function addComment() {
-    const full_name = get('full_name').value;
+    const full_name = get('name').value;
     const comment = get('comment').value;
-    const commentContainer = get('comments-container');
+    const commentContainer = get('comments_container');
     const newComment = createComment(full_name, comment);
     commentContainer.prepend(newComment);
-    get('full_name').value = '';
+    get('name').value = '';
     get('comment').value = '';
 }
 
 function sortComments(order) {
-    const commentContainer = get('comments-container');
+    const commentContainer = get('comments_container');
     const comments = Array.from(commentContainer.children);
 
     comments.sort(function(a, b) {
