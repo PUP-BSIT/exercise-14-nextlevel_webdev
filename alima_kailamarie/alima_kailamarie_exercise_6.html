@@ -85,27 +85,30 @@
         </div>
 
         <div class="comment">
-        <h2>Comments</h2>
-        <div id="comments_container"></div>
+            <h2>Comments</h2>
+            <div id="comments-container"></div>
            
         </div>
-
+    
         <div class="comment-section">
-        <form id="comment_form">
-            <label for="full_name">Name:</label>
-            <input type="text" id="full_name" required>
-        
-            <label for="comment">Comment:</label>
-            <textarea id="comment" 
-            placeholder="Your Comment" required></textarea>
-
-            <button type="submit" 
-            id="comment_button" disabled>Comment</button>
-
-            <button id="sort_asc_button">Sort Ascending</button>
-            <button id="sort_desc_button">Sort Descending</button>
-        </form>
+            <form id="comment_form">
+                <label for="full_name">Full Name:</label>
+                <input type="text" id="full_name" 
+                name="full_name" required>
+    
+                <label for="comment">Comment:</label>
+                <textarea id="comment" 
+                placeholder="Your Comment" required></textarea>
+    
+                <button type="submit" 
+                id="comment_button" disabled>Comment</button>
+    
+                <button id="sort_asc_button">Sort Ascending</button>
+                <button id="sort_desc_button">Sort Descending</button>
+    
+            </form>
         </div>
+    
     <script src="comment.js"></script>
 </body>
 </html>
