@@ -1,51 +1,61 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Enable the "Comment" button when both fields are filled out
-    const nameInput = document.getElementById("name");
-    const commentInput = document.getElementById("comment");
-    const commentButton = document.getElementById("comment_button");
-    const commentDisplay = document.getElementById("comment_display");
+const get = (id) => document.getElementById(id);
+const val = (id) => get(id).value.trim();
+const createComment = (full_name, comment) => {
+    const newComment = document.createElement('div');
+    newComment.classList.add('comment');
+    newComment.innerHTML = <p><strong>${full_name}: </strong>${comment}</p>;
+    newComment.dataset.date = new Date().toISOString();
+    return newComment;
+};
 
-    nameInput.addEventListener("input", toggleCommentButton);
-    commentInput.addEventListener("input", function () {
-        toggleCommentButton();
-        commentDisplay.textContent = commentInput.value;
+function updateCommentButton() {
+    const full_name = get('full_name').value;
+    const comment = get('comment').value;
+    const comment_button = get('comment_button');
+    
+    comment_button.disabled = full_name.trim() === ''|| comment.trim() === '';
+}
+
+function addComment() {
+    const full_name = get('full_name').value;
+    const comment = get('comment').value;
+    const commentContainer = get('comments-container');
+    const newComment = createComment(full_name, comment);
+    commentContainer.prepend(newComment);
+    get('full_name').value = '';
+    get('comment').value = '';
+}
+
+function sortComments(order) {
+    const commentContainer = get('comments-container');
+    const comments = Array.from(commentContainer.children);
+
+    comments.sort(function(a, b) {
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+
+        return order === 'asc' ? dateA - dateB : dateB - dateA;
     });
 
-    function toggleCommentButton() {
-        commentButton.disabled = !(nameInput.value && commentInput.value);
-    }
-
-    document.getElementById('comment_form').addEventListener('submit', 
-    function(event) {
-        event.preventDefault(); 
-
-        const name = nameInput.value;
-        const comment = commentInput.value;
-        const timestamp = new Date().getTime();
-
-        const newComment = document.createElement('div');
-        newComment.classList.add('comment');
-        newComment.setAttribute('data-timestamp', timestamp);
-        newComment.innerHTML = `<strong>${name}:</strong> ${comment}`;
-
-        commentDisplay.insertBefore(newComment, commentDisplay.firstChild);
-
-        nameInput.value = '';
-        commentInput.value = '';
-
-        commentButton.disabled = true;
-
-        sortComments();
+    commentContainer.innerHTML = '';
+    comments.forEach(function(comment) {
+        commentContainer.appendChild(comment);
     });
+}
 
-    function sortComments() {
-        const comments = commentDisplay.children;
-        Array.from(comments).sort(function(a, b) {
-            const timestampA = parseInt(a.getAttribute('data-timestamp'));
-            const timestampB = parseInt(b.getAttribute('data-timestamp'));
-            return timestampB - timestampA;
-        }).forEach(function(comment) {
-            commentDisplay.appendChild(comment);
-        });
-    }
+get('comment_form').addEventListener('input', updateCommentButton);
+
+get('comment_form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    addComment();
+    updateCommentButton();
+    sortComments('asc');
+});
+
+get('sort_asc_button').addEventListener('click', function() {
+    sortComments('asc');
+});
+
+get('sort_desc_button').addEventListener('click', function() {
+    sortComments('desc');
 });
