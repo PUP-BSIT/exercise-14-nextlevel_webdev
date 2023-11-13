@@ -8,28 +8,29 @@ const createComment = (full_name, comment) => {
     return newComment;
 };
 
-const updateCommentButton = () => {
-    const { value: full_name } = get('full_name');
-    const { value: comment } = get('comment');
-    const { disabled } = get('comment_button');
-    get('comment_button').disabled = full_name === '' || comment === '';
-};
+function updateCommentButton() {
+    const full_name = get('full_name').value;
+    const comment = get('comment').value;
+    const comment_button = get('comment_button');
+    
+    comment_button.disabled = full_name.trim() === ''|| comment.trim() === '';
+}
 
-const addComment = () => {
-    const full_name = val('full_name');
-    const comment = val('comment');
+function addComment() {
+    const full_name = get('full_name').value;
+    const comment = get('comment').value;
     const commentContainer = get('comments-container');
     const newComment = createComment(full_name, comment);
     commentContainer.prepend(newComment);
     get('full_name').value = '';
     get('comment').value = '';
-};
+}
 
-const sortComments = (order) => {
+function sortComments(order) {
     const commentContainer = get('comments-container');
     const comments = Array.from(commentContainer.children);
 
-    comments.sort((a, b) => {
+    comments.sort(function(a, b) {
         const dateA = new Date(a.dataset.date);
         const dateB = new Date(b.dataset.date);
 
@@ -37,17 +38,24 @@ const sortComments = (order) => {
     });
 
     commentContainer.innerHTML = '';
-    comments.forEach(comment => commentContainer.appendChild(comment));
-};
+    comments.forEach(function(comment) {
+        commentContainer.appendChild(comment);
+    });
+}
 
 get('comment_form').addEventListener('input', updateCommentButton);
 
-get('comment_form').addEventListener('submit', (event) => {
+get('comment_form').addEventListener('submit', function(event) {
     event.preventDefault();
     addComment();
     updateCommentButton();
     sortComments('asc');
 });
 
-get('sort_asc_button').addEventListener('click', () => sortComments('asc'));
-get('sort_desc_button').addEventListener('click', () => sortComments('desc'));
+get('sort_asc_button').addEventListener('click', function() {
+    sortComments('asc');
+});
+
+get('sort_desc_button').addEventListener('click', function() {
+    sortComments('desc');
+});
